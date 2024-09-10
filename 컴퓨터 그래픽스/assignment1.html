@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>assignment01</title>
+    <script type="text/javascript" src="../libs/three.js"></script>
+    <style>
+        body {
+            /* set margin to 0 and overflow to hidden, to
+             use the complete page */
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Div which will hold the Output -->
+<div id="WebGL-output">
+</div>
+
+<!-- Javascript code that runs our Three.js examples -->
+<script type="text/javascript">
+
+    // once everything is loaded, we run our Three.js stuff.
+    function init() {
+        // create a scene, that will hold all our elements such as objects, cameras and lights.
+        var scene = new THREE.Scene();
+
+        // create a camera, which defines where we're looking at.
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // create a render and set the size
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setClearColorHex();
+        renderer.setClearColor(new THREE.Color(0xEEEEEE));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // show axes in the screen, X: red, Y: green, Z: blue
+        var axes = new THREE.AxisHelper(20);
+        scene.add(axes);
+
+        // create an object
+        var axes2 = new THREE.AxisHelper(5);
+        var cylinderGeometry = new THREE.CylinderGeometry(0.5,0.5,3,12);
+        var cylinderMaterial = new THREE.MeshNormalMaterial({wireframe: false});
+        var cylinder = new THREE.Mesh(cylinderGeometry,cylinderMaterial);
+        const geometry = new THREE.CylinderGeometry(0,0.7,2,12);
+        const material = new THREE.MeshNormalMaterial({wireframe: false});
+        const cone = new THREE.Mesh( geometry, material );
+        var axes2 = new THREE.AxisHelper(2);
+        var obj1 = axes2.clone();
+        cone.position.y=2.5;
+        cylinder.add(cone);
+        cylinder.position.y=1.5;
+        obj1.add(cylinder);
+
+        // make 4 clones of the object
+        var obj2 = obj1.clone();
+        var obj3 = obj1.clone();
+        var obj4 = obj1.clone();
+        var obj5 = obj1.clone();
+
+        // and place them along x aixs
+        obj1.position.x = 1;
+        obj2.position.x = 2;
+        obj3.position.x = 3;
+        obj4.position.x = 4;
+        obj5.position.x = 5;
+
+        var startAngle = Math.PI/2;
+        var endAngle = -Math.PI/2;
+
+        obj1.rotation.x = startAngle;
+        obj5.rotation.x = endAngle;
+
+        obj2.rotation.x = interpolateAngle( obj1.position.x,
+                                            obj5.position.x,
+                                            obj2.position.x,
+                                            obj1.rotation.x,
+                                            obj5.rotation.x);
+        obj3.rotation.x = interpolateAngle( obj1.position.x,
+                                            obj5.position.x,
+                                            obj3.position.x,
+                                            obj1.rotation.x,
+                                            obj5.rotation.x);
+        obj4.rotation.x = interpolateAngle( obj1.position.x,
+                                            obj5.position.x,
+                                            obj4.position.x,
+                                            obj1.rotation.x,
+                                            obj5.rotation.x);
+        
+        scene.add(obj1);
+        scene.add(obj2);
+        scene.add(obj3);
+        scene.add(obj4);
+        scene.add(obj5);
+
+        
+        // position and point the camera to the center of the scene
+        camera.position.x = 20;
+        camera.position.y = 0;
+        camera.position.z = 0;
+        camera.lookAt(scene.position);
+
+        // add the output of the renderer to the html element
+        document.getElementById("WebGL-output").appendChild(renderer.domElement);
+
+        // render the scene
+        renderer.render(scene, camera);
+    }
+    function interpolateAngle (S, E, C, A1, A2){
+        // S: start value
+        // E: end value
+        // C: current value
+        // A1: start angle
+        // A2: end angle
+        var t = (C-S)/(E-S);
+        return A1+t*(A2-A1);
+    }
+    window.onload = init
+
+</script>
+</body>
+</html>
