@@ -1,0 +1,43 @@
+#리소스 그룹 생성
+az group create --name myResourceGroup --location eastus
+
+#vmss생성
+az vmss create --resource-group myResourceGroup --name myScaleSet --orchestration-mode Flexible --image Ubuntu2204 --admin-username azureuser --generate-ssh-keys --upgrade-policy-mode Automatic
+
+#vmss 인스턴스 리스트
+az vmss list-instances --name myScaleSet --resource-group myResourceGroup --output table
+
+#autoscale 생성
+az monitor autoscale create --resource myScaleSet --resource-group myResourceGroup --resource-type Microsoft.Compute/virtualMachineScaleSets     --name autoscale     --min-count 2     --max-count 10     --count 2
+
+#확장규칙생성
+az monitor autoscale rule create     --autoscale-name autoscale      --scale out 2     --condition "Percentage CPU > 80 avg 3m" --resource-group myResourceGroup
+
+#축소규칙생성
+az monitor autoscale rule create     --autoscale-name autoscale      --scale in 1     --condition "Percentage CPU < 30 avg 3m" --resource-group myResourceGroup 
+
+#확장규칙리스트
+az monitor autoscale rule list --resource-group myResourceGroup --autoscale-name autoscale
+
+#customConfig.json생성
+vi customConfig.json
+{
+  "fileUris": ["https://raw.githubusercontent.com/Azure-Samples/compute-automation-configurations/master/automate_nginx.sh"],
+  "commandToExecute": './automate_nginx.sh'
+}
+
+#extension 적용
+az vmss extension set     --resource-group myResourceGroup     --vmss-name myScaleSet     --name CustomScript     --publisher Microsoft.Azure.Extensions     --version 2.0     --settings customConfig.json
+
+#부하분산규칙 생성
+az network lb rule create --backend-port 80  --resource-group myResourceGroup  --frontend-port 80  --lb-name  myScaleSetLB  --name myLoadBalancerRuleWeb  --frontend-ip-name loadBalancerFrontEnd  --backend-pool-name myScaleSetLBBEPool   --protocol tcp
+
+#public ip 확인
+az network public-ip show --resource-group myResourceGroup --name myScaleSetLBPublicIP --query [ipAddress] --output tsv
+
+#ssh로 접속
+ssh azureuser@13.90.172.98 -p 50000
+
+#nginx 설치
+apt-get update -y && apt-get upgrade -y 
+sudo apt-get install -y nginx && echo "Hello World from host" $HOSTNAME "!" | sudo tee -a /var/www/html/index.html
