@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container{
+            width :980px;
+            text-align: center;
+        }
+        #header{
+            background-color: black;
+            color:white;
+            font-size: 30px;
+            margin-bottom: 0px;
+        }
+        #navi{
+            background-color: rgb(73, 64, 64);
+            color:white;
+            text-align: left;
+            font-size: 20px;
+            height: 30px;
+            
+        }
+        #portrait{
+            float:left;
+            clear:left;
+        }
+        #profile{
+            background-color: gray;
+            height: 100%;
+        }
+        .bold{
+            font-weight: bold;
+        }
+        .italic{
+            font-style: italic;
+        }
+    
+        .inline{
+            display:inline-block;
+        }
+        .tbl{
+            font-weight: bold;
+            background-color: gray;
+        }
+        .imgbox{
+            
+            overflow: hidden;
+            display: inline;
+        }
+        .simg{
+            width: 150px;
+            height: 150px;
+            border:black solid 2px;
+            background-color: white;
+        }
+        #copy{
+            display: block;
+            position: static;
+            top:10px;
+            left:0px;
+        }
+    </style>
+</head>
+<body>
+    <div id = "container">
+        <div id = "header"><p style="margin: 0px;">이풍헌의 홈페이지</p></div>
+        <div id="navi">
+            <nav>
+                <a>Home</a>
+                <a>Profile</a>
+                <a>Education</a>
+                <a>Skills</a>
+                <a>Conatact</a>
+            </nav>
+        </div>
+        <div>
+            <div id="portrait" class="inline">
+                <p>
+                    <p class="bold">201924548 이풍헌</p>
+                    <img src="./img/iu.jpg" width="200px" height="300px">
+                    <table>
+                        <tr>
+                            <td class = "tbl">이름</td>
+                            <td>이풍헌</td>
+                        </tr>
+                        <tr>
+                            <td class = "tbl">학번</td>
+                            <td>201924548</td>
+                        </tr>
+                        <tr>
+                            <td class = "tbl">학과</td>
+                            <td>정보컴퓨터공학부</td>
+                        </tr>
+                        <tr>
+                            <td class = "tbl">학년</td>
+                            <td>3학년</td>
+                        </tr>
+                    </table>
+                </p>
+            </div>
+            <div id="profile" class="inline" style="width: 780px; height: 470px;">
+                <div id="education">
+                    <p class="bold">education</p>
+                    <p>2023 인터넷과웹기초</p>
+                </div>
+                <hr>
+                <div id="skills">
+                    <p class="bold">Skills</p>
+                    <div class="imgbox"><img class="simg" src="./img/c++.png"></div>
+                    <div class="imgbox"><img class="simg" src="./img/java.png"></div>
+                    <div class="imgbox"><img class="simg" src="./img/csharp.png"></div>
+                    <br>
+                    <div class="imgbox"><img class="simg" src="./img/python.png"></div>
+                    <div class="imgbox"><img class="simg" src="./img/js.png"></div>
+                    <div class="imgbox"><img class="simg" src="./img/react.png"></div>
+                </div>
+            </div>
+        </div>
+        <div id="copy">
+            <p class = "italic">CopyRight &#169; 2023 이풍헌</p>
+        </div>
+    </div>
+    
+</body>
+</html>

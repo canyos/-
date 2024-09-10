@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홈</title>
+    <link rel="stylesheet"  href="./shopping.css">
+    <script src="shopping.js"></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+</head>
+<body id="main" class = 'body'>
+    
+    <header>
+        <h1>쇼핑몰</h1>
+        <button type="button" id='basketbtn' onclick="location.href='basket.html'  ">장바구니</button><br>
+    
+        <nav>
+            <button type="button" onclick="location.href='#top' ">상의</button>
+            <button type="button" onclick="location.href='#bottom' ">하의</button>
+            <button type="button" onclick="location.href='#shoes' ">신발</button>
+            <button type="button" onclick="location.href='#outer' ">아우터</button>
+        </nav>
+    </header>
+    <hr id="top">
+    <div class="grid-container"><script>init();display(0)</script></div>
+    <hr id="bottom">
+    <div class="grid-container"><script>display(1)</script></div>
+    <hr id="shoes">
+    <div class="grid-container"><script>display(2)</script></div>
+    <hr id="outer">
+    <div class="grid-container"><script>display(3)</script></div>
+    <hr>
+    <footer>
+        <p>주식회사 쇼핑몰</p>
+        <p>전화번호 000-0000-0000</p>
+        <p>이메일 help@쇼핑몰.com</p>
+    </footer>
+</body>
+</html>

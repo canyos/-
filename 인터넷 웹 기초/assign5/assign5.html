@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Document</title>
+    <style>
+        
+        *{
+            text-align: center;
+        }
+        #container{
+            display: grid;
+            grid-template-areas: 
+            'img1 img2'
+            'name1 name2'
+            'exp1 exp2'
+            'img3 img4'
+            'name3 name4'
+            'exp3 exp4';
+            grid-template-columns: 1fr 1fr;
+            gap:10px;
+        }
+        img{
+            display: block;
+            margin:auto;
+        }
+        @media all and (min-width:1060px){
+            #container{
+                grid-template-areas: 
+                'img1 img2 img3 img4'
+                'name1 name2 name3 name4'
+                'exp1 exp2 exp3 exp4';
+                grid-template-columns: repeat(4,1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div style="background-color: black;"><h1 style="color:white">201924548 이풍헌</h1></div>
+    <div>
+        <h1>Compare the product</h1>
+        <div id="container">
+            
+                <img style="grid-area: img1;" src="./images/sph-a5000.jpg">
+                <img style="grid-area: img2;" src="./images/sch-w120.jpg">
+                <img style="grid-area: img3;" src="./images/sch-v500.jpg">
+                <img style="grid-area: img4;" src="./images/sch-s250.jpg">
+                
+                <p style="grid-area: name1; border-top: solid 1px lightgray;">SPH-A5000</p>
+                <p style="grid-area: name2;border-top: solid 1px lightgray;">SCH-W120</p>
+                <p style="grid-area: name3;border-top: solid 1px lightgray;">SCH-V500</p>
+                <p style="grid-area: name4;border-top: solid 1px lightgray;">SCH-S250</p>
+
+                <p style="grid-area: exp1;">세계 최초의 전자동 폴더</p> 
+                <p style="grid-area: exp2;">한국 최초의 WCDMA 폰</p>
+                <p style="grid-area: exp3;">가로본능 로테이션 폴더폰</p>
+                <p style="grid-area: exp4;">세계 최초의 500만 화소 카메라 탑재 휴대폰</p>
+        </div>
+    </div>
+    <div><p>copyright &#169; 2023 이풍헌</p></div>
+</body>
+</html>

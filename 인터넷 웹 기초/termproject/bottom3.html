@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상세페이지</title>
+    <link rel="stylesheet" href="./shopping.css">
+    <script src="shopping.js"></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+</head>
+<body id="detail">
+    <p id = 'itemName'>bottom3</p>
+    <img id = 'itemImg' src ="img/bottom3.jpg">
+    <ul>
+        <li><a id="link1"></a></li>
+        <li><a id="link2"></a></li>
+        <li><a id="link3"></a></li>
+        <script>
+            $(document).ready(function(){
+                $.ajax({
+                    url: 'https://dapi.kakao.com/v2/search/web',
+                    type: 'GET',
+                    data: {
+                        query : 'bottom3', 
+                    },
+                    dataType: 'JSON', 
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('Authorization', 'KakaoAK c93a634f89a2ac204fce4d5d82c7f403'); 
+                    },
+                    success: function(data) {
+                        document.getElementById('link1').href = data.documents[0].url;
+                        document.getElementById('link1').innerHTML = data.documents[0].title;
+                        document.getElementById('link2').href = data.documents[1].url;
+                        document.getElementById('link2').innerHTML = data.documents[1].title;
+                        document.getElementById('link3').href = data.documents[2].url;
+                        document.getElementById('link3').innerHTML = data.documents[2].title;
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', status, error);
+                    }
+                });
+            })
+            
+            
+        </script>
+    </ul>
+    <p>상세설명</p>
+    <p id = 'itemEx'>
+        bottom3<br>
+        price : 3
+    </p>
+    <button type="button" onclick="location.href='project.html' ">홈</button>
+    <button type="button" onclick=select()>장바구니 담기</button><br>
+</body>
+</html>

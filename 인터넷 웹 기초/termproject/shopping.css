@@ -1,0 +1,45 @@
+div div{ /*combinator1*/
+    display:inline-block;
+    padding:0px 30px 0px 0px;
+
+}
+div div img{/*combinator2*/ 
+    width:200px;
+    height:200px;
+}
+#main button{/*combinator3*/ 
+    background-color:beige;
+}
+footer p{/*combinator4*/ 
+    font-weight: bold;
+}
+table tbody tr{/*combinator5*/ 
+    clear:left;
+    border :solid black;
+}
+.body{
+    width: 1060px;
+    text-align: center;
+}
+div[class='grid-container']{ /*attribute selector1*/
+    display:grid;
+    padding:10px;
+    grid-template-columns: auto auto auto;
+}
+@media screen and (max-width:900px) {/*모바일 환경 대응*/
+    div[class='grid-container']{
+        grid-template-columns: auto;
+    }
+}
+a:link{color:blue;} /*pseudo-class1*/
+a:visited{color:purple;}/*pseudo-class2*/
+#itemEx::first-letter{/*pseudo-elements1*/
+    font-size: 200%;
+}
+#price::first-line{/*pseudo-elements2*/
+    font-weight: bold;
+}
+a[href^="http"]{ /*attribute selector2*/
+    color:green;
+}
+

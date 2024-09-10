@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장바구니</title>
+    <link rel="stylesheet" href="./shopping.css">
+    <script src="shopping.js"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwrLpSw6cUnjOBknZdx_kYGH2tvE5e23A&callback=myMap"></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+</head>
+<body id ='basket'>
+    <h1>장바구니</h1>
+    <table style="border-collapse: collapse;"><!--장바구니 js-->
+        <script>
+            init();
+            makeTable();
+        </script>
+    </table>
+    <p>합계 금액:<p id="price"></p><button type="button" onclick=cal()>가격 조회하기</button><br></p>
+    
+    <div>
+        <p>수령 방식</p>
+        <p onclick = hideMap()><input type="radio" name = "take" value="parcel" ><label>택배</label></p>
+        <p onclick = drawMap()><input type="radio" name = "take"value="visit" ><label>방문 수령</label></p>
+    </div>
+    <button type="button" onclick="location.href='project.html' ">홈</button> 
+    <button type="button" onclick=order()>주문하기</button><br>
+    <div><!--지도 부분-->
+        <p>방문수령장소</p>
+        <div id="map" style="width: 500px; height: 500px;">
+        <script>
+            function myMap(){
+                var mapOptions = { 
+                        center:new google.maps.LatLng(35.231, 129.0821),
+                        zoom:20
+                };
+            
+                var map = new google.maps.Map( 
+                        document.getElementById("map") 
+                        , mapOptions );
+                const marker = new google.maps.Marker({
+                    position: { lat:35.231, lng:129.0821 },
+                    label:"제 6공학관",
+                    map:map,
+                });
+            }
+        </script> 
+         
+    </div>
+</body>
+</html>
