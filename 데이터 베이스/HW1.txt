@@ -1,0 +1,64 @@
+1. Find the titles of courses in the Computer Science (Comp. Sci.) department that have 3 credits. (6 pts)
+select title from course where dept_name = 'Comp. Sci.' and credits = 3;
+
+2. Find the IDs of all students who were taught by an instructor named Einstein. Make sure there are no duplicates in the result.  (6 pts)
+select distinct id from takes s inner join (select course_id, sec_id, semester, year from teaches a inner join (select id from instructor where name = 'Einstein') b on a.id = b.id) b on s.course_id = b.course_id and s.sec_id = b.sec_id and s.semester = b.semester and s.year = b.year;
+
+3. Find the highest salary of any instructor. (7 pts)
+select salary from instructor i except (select i.salary from instructor i inner join instructor i2 on i.salary <i2.salary) ;
+
+4. Find the IDs of all instructors earning the highest salary. There may be more than one with the same salary. (7 pts)
+select id from instructor i inner join (select salary from instructor i except (select i.salary from instructor i inner join instructor i2 on i.salary <i2.salary)) b on i.salary = b.salary;
+
+5. Find the enrollment of each section that was offered in Fall 2007. (8 pts)
+select course_id, sec_id, count(id) from takes t where t.semester ='Fall' and t."year" = 2007 group by t.course_id ,t.sec_id ;
+
+6. Find the maximum number of enrollments, across all sections, in Fall 2007. (8 pts)
+select t.course_id, t.sec_id, count(t.id) from takes t where t.semester ='Fall' and t."year" = 2007 group by t.course_id, t.sec_id 
+except
+(
+select distinct a.course_id, a.sec_id, a.count 
+	from (select course_id, sec_id, count(id) as count from takes t where t.semester ='Fall' and t."year" = 2007 group by t.course_id ,t.sec_id) a
+	inner join (select course_id, sec_id, count(id) as count from takes t where t.semester ='Fall' and t."year" = 2007 group by t.course_id ,t.sec_id) b
+	on a.count < b.count );
+
+7. Find the IDs of sections that had the maximum number of enrollments in Fall 2007. (9 pts)
+select t.course_id , t.sec_id  from takes t where t.semester ='Fall' and t."year" = 2009 group by t.course_id,t.sec_id 
+except (select distinct a.course_id,a.sec_id
+from (select course_id, sec_id,count(id) from takes t where t.semester ='Fall' and t."year" = 2009 group by course_id,sec_id) a
+join (select course_id, sec_id,count(id) from takes t where t.semester ='Fall' and t."year" = 2009 group by course_id,sec_id) b 
+on a.count < b.count);
+
+
+8. Find the ID and name of each student who has taken at least one Comp. Sci. course; make sure there are no duplicate names in the result.  (9 pts)
+select s.id, s.name from student s 
+join (
+select distinct t.id  from takes t join 
+(select course_id from course where dept_name = 'Comp. Sci.') a
+on t.course_id = a.course_id ) a
+on s.id = a.id;
+
+9. Find all takes tuples corresponding to any section of any course with the word “advanced” as a part of the title; ignore case when matching the word with the title. (Hint: Use LOWER function in where clause) (10 pts)
+select s.* from section s join
+(select course_id from course c where lower(title) like '%advanced%')a
+on s.course_id = a.course_id
+
+10. For each student who has retaken a course at least twice (i.e., the student has taken the course at least three times), show the course ID and the student’s ID. Please display your results in ascending order of course ID and do not display duplicate rows. (10 pts)
+select a.id,a.course_id  from
+(select t.id,t.course_id ,count(year) as c from takes t group by (t.id,t.course_id))a
+where a.c>1 order  by course_id asc; 
+
+11. Find the IDs of those students who have retaken at least three distinct courses at least once (i.e, the student has taken the course at least two times). (10 pts)
+select c.id from(
+select b.id,count(b.course_id) as cnt from
+( select a.id,a.course_id  from
+(select t.id,t.course_id ,count(year) as c from takes t group by (t.id,t.course_id))a
+where a.c>1) b group by b.id) c
+where c.cnt>=3; 
+
+12. Find the ID and title of each course in Comp. Sci. that has had at least one section with afternoon hours (i.e., ends at or after 12:00). (You should eliminate duplicates if any.) (10 pts)
+select distinct a.course_id, a.title from  
+(select c.course_id,c.title, s.time_slot_id from course c join section s on c.course_id  = s.course_id where c.dept_name = 'Comp. Sci.') a
+join
+(select distinct time_slot_id from time_slot where start_hr>=12 or end_hr>=12) b
+on a.time_slot_id = b.time_slot_id;

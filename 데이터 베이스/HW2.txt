@@ -1,0 +1,25 @@
+1. For each department, find the maximum salary of instructors in that department. You may assume that every department has at least one instructor. (14pts)
+select i.* from instructor i ,(select dept_name , max(salary) as M from instructor group by dept_name) d where i.dept_name = d.dept_name and i.salary  = d.M;
+2. Find the lowest value among the maximum salaries for instructors in each department, across all departments. (16pts)
+select min(m) from (select dept_name , max(salary) as m from instructor group by dept_name) d;
+3. Find the names and IDs of instructors who teach every course taught in his or her department (i.e., every course that appears in the course relation with the instructor’s department name). Order result by name. (16pts)
+select i.id, i.name from instructor i ,
+( select id ,count(course_id) from teaches group by id) r1,
+(select dept_name, count(course_id) from course c  group by dept_name)r2
+where i.id = r1.id and i.dept_name =r2.dept_name and r1.count = r2.count
+order by name asc;
+4. Find the ID and name of each instructor who has never given an A+ grade in any course she or he has taught. (Instructors who have never taught a course trivially satisfy this condition.) (18pts)
+select i.id,i.name from instructor i 
+where i.id not in
+(select distinct t.id from teaches t inner join 
+(select distinct course_id, sec_id,semester,year from takes where grade = 'A+') t1
+on t.course_id = t1.course_id and t.sec_id =t1.sec_id and t.semester = t1.semester and t."year"  = t1."year");
+5. Find the number of students in each section. The result columns should appear in the order “course_id, sec_id, year, semester, num”. You do not need to output sections with 0 students. (18pts)
+select t.course_id , t.sec_id , t."year" , t.semester,count(id) as cnt from takes t 
+group by t.course_id ,t.sec_id ,t."year" ,t.semester having  count(id) >0 ;
+6. Find section(s) with the maximum number of enrollment. The result columns should appear in the order “course_id, sec_id, year, semester, num”. (It may be convenient to use the with construct.) (18pts)
+with cntEnr as
+(select course_id,sec_id,"year",semester, count(id) as cnt from takes group by (course_id,sec_id,"year",semester))
+select course_id ,sec_id ,"year" ,semester ,cnt from cntEnr where cnt = (select max(cnt) from cntEnr);
+
+
